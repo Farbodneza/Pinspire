@@ -1,6 +1,8 @@
+from django.contrib import admin
 from django.urls import path, include
+from accounts.urls import urlspatterns as AcountAPI
 
 urlpatterns = [
-    # path('admin/', admin.site.urls), # Not using Django Admin with raw SQL
-    path('api/', include('core.urls')),
+    path('admin/', admin.site.urls),
+    path('api/', include(AcountAPI)),
 ]
