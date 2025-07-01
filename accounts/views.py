@@ -8,15 +8,15 @@ from rest_framework import viewsets, status
 from accounts.serializers import CustomuserRegisterSerializer, CustomuserLoginSerializer, EditProfileSerializer
 # Create your views here.
 
-class RegisterUserAPIView(generics.GenericAPIView):
+class RegisterUserAPIView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomuserRegisterSerializer
 
 
 class LoginUserAPIView(APIView):
     def post(self, request, *args, **kwargs):
-        serializer = CustomuserLoginSerializer
-        serializer.is_valid(data=request.data)
+        serializer = CustomuserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
         username = serializer.validated_data['username']
         password = serializer.validated_data['password']
@@ -42,16 +42,17 @@ class LogoutUserAPIView(APIView):
 
 class ProfileManagmentAPIView(generics.RetrieveUpdateAPIView):
     queryset = CustomUser.objects.all()
-    lookup_field = 'pk'
-    lookup_url_kwarg = 'me'
+    def get_object(self):
+        return self.request.user
     def get_serializer_class(self):
-        if self.request.method == "POST":
-            return RegisterUserAPIView
-        return RegisterUserAPIView
+        if self.request.method in ['PUT', 'PATCH']:
+            return EditProfileSerializer
+        return CustomuserRegisterSerializer
     
 
 class ViewProfile(generics.RetrieveAPIView):
+    serializer_class = CustomuserRegisterSerializer
     queryset = CustomUser.objects.all()
-    lookup_field = 'pk'
-    lookup_url_kwarg = 'pk'
+    lookup_field = 'username'
+    lookup_url_kwarg = 'username'
 
