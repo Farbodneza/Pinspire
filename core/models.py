@@ -1,11 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
-
-
-class CustomUser(AbstractUser):
-    bio = models.TextField(blank=True,null=True)
-    profile_picture = models.ImageField(blank=True, null=True)
+from accounts.models import CustomUser
 
 
 class Pin(models.Model):
@@ -30,7 +25,7 @@ class Board(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='owner_board')
-    pins = models.ManyToManyField(Pin, related_name='boards', blank=True, related_name='pins_board')
+    pins = models.ManyToManyField(Pin, related_name='boards', blank=True)
     
 
 class Likes(models.Model):
@@ -40,6 +35,6 @@ class Likes(models.Model):
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(CustomUser, unique=True, related_name="user_wishlist")
+    user = models.ForeignKey(CustomUser, unique=True, related_name="user_wishlist", on_delete=models.CASCADE)
     pins = models.ForeignKey(Pin, unique=True, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
