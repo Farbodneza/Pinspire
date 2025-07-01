@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.models import CustomUser
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from accounts.serializers import CustomuserRegisterSerializer, CustomuserLoginSerializer
+from accounts.serializers import CustomuserRegisterSerializer, CustomuserLoginSerializer, EditProfileSerializer
 # Create your views here.
 
 class RegisterUserAPIView(generics.GenericAPIView):
@@ -38,3 +38,20 @@ class LogoutUserAPIView(APIView):
     def post(self, request, *args, **kwargs):
         logout(request)
         return Response({'detail': 'Successfully logged out.'}, status=status.HTTP_204_NO_CONTENT)
+    
+
+class ProfileManagmentAPIView(generics.RetrieveUpdateAPIView):
+    queryset = CustomUser.objects.all()
+    lookup_field = 'pk'
+    lookup_url_kwarg = 'me'
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return RegisterUserAPIView
+        return RegisterUserAPIView
+    
+
+class ViewProfile(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    lookup_field = 'pk'
+    lookup_url_kwarg = 'pk'
+
