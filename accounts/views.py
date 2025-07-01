@@ -32,3 +32,9 @@ class LoginUserAPIView(APIView):
             }, status=status.HTTP_200_OK)
 
         return Response({'error': 'Invalid username or password'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+class LogoutUserAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return Response({'detail': 'Successfully logged out.'}, status=status.HTTP_204_NO_CONTENT)
