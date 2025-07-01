@@ -5,13 +5,13 @@ from accounts.models import CustomUser
 class CustomuserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'profile_picture', 'bio']
-    def create(self,validated_data):
+        fields = ['username', 'email', 'password']
+    def create(self, validated_data):
         user = CustomUser(
             username=validated_data['username'],
-            email=validated_data['email'],
+            email=validated_data['email']
             )
-        user.set_password[validated_data['password']]
+        user.set_password(validated_data['password'])
         user.save()
         return user
     # to repersetiotion
