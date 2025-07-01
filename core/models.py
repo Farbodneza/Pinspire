@@ -33,3 +33,7 @@ class Board(models.Model):
     pins = models.ManyToManyField(Pin, related_name='boards', blank=True, related_name='pins_board')
     
 
+class Likes(models.Model):
+    user = models.ForeignKey(CustomUser, unique=True, related_name="user_likes", on_delete=models.CASCADE)
+    pins = models.ForeignKey(Pin, unique=True, related_name="pin_likes", on_delete=models.CASCADE)
+    liked_at = models.DateTimeField(auto_now=True)
