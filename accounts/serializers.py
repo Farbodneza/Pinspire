@@ -5,7 +5,7 @@ from accounts.models import CustomUser
 class CustomuserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password', 'profile_picture', 'bio']
     def create(self,validated_data):
         user = CustomUser(
             username=validated_data['username'],
@@ -22,6 +22,6 @@ class CustomuserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(required=True, write_only=True)
 
 
-class ProfileManagmentserializer(serializers.Serializer):
+class EditProfileSerializer(serializers.Serializer): 
     profile_picture = serializers.CharField()
     bio = serializers.CharField()
