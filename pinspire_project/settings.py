@@ -9,13 +9,14 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    # 'django.contrib.admin', # Not using Django Admin with raw SQL
-    # 'django.contrib.auth', # Not using Django's Auth system directly, but hashers are used
+    'django.contrib.admin', # Not using Django Admin with raw SQL
+    'django.contrib.auth', # Not using Django's Auth system directly, but hashers are used
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -23,7 +24,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware', # Keep for POST requests, but views are @csrf_exempt
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware', # Not using Django's Auth system
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Not using Django's Auth system
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.middlewares.JWTAuthenticationMiddleware', # Our custom JWT middleware
@@ -88,3 +89,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEl = 'core.CustomUser'
