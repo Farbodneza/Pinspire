@@ -37,3 +37,9 @@ class Likes(models.Model):
     user = models.ForeignKey(CustomUser, unique=True, related_name="user_likes", on_delete=models.CASCADE)
     pins = models.ForeignKey(Pin, unique=True, related_name="pin_likes", on_delete=models.CASCADE)
     liked_at = models.DateTimeField(auto_now=True)
+
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(CustomUser, unique=True, related_name="user_wishlist")
+    pins = models.ForeignKey(Pin, unique=True, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
