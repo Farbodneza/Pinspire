@@ -5,10 +5,10 @@ from accounts.models import CustomUser
 
 class Pin(models.Model):
     owner = models.ForeignKey(CustomUser,related_name='user_pin', on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media/pins')
     title = models.TextField(max_length=150)
     description = models.TextField()
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -29,12 +29,12 @@ class Board(models.Model):
     
 
 class Likes(models.Model):
-    user = models.ForeignKey(CustomUser, unique=True, related_name="user_likes", on_delete=models.CASCADE)
-    pins = models.ForeignKey(Pin, unique=True, related_name="pin_likes", on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, related_name="user_likes", on_delete=models.CASCADE)
+    pins = models.OneToOneField(Pin, related_name="pin_likes", on_delete=models.CASCADE)
     liked_at = models.DateTimeField(auto_now=True)
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(CustomUser, unique=True, related_name="user_wishlist", on_delete=models.CASCADE)
-    pins = models.ForeignKey(Pin, unique=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, related_name="user_wishlist", on_delete=models.CASCADE)
+    pins = models.OneToOneField(Pin, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
