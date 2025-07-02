@@ -11,8 +11,6 @@ class PinSerializer(serializers.ModelSerializer):
 
 
 class BoardSerializer(serializers.ModelSerializer):
-    owner = CustomuserRegisterSerializer()
-    pins = PinSerializer()
     class Meta:
         model = Board
-        fiels = "__all__"
+        fields = '__all__'
