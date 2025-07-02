@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from accounts.serializers import CustomuserRegisterSerializer
-from core.models import  Pin, Board
+from core.models import  Pin, Board, Likes, Wishlist
 
 
 class PinSerializer(serializers.ModelSerializer):
@@ -13,4 +13,16 @@ class PinSerializer(serializers.ModelSerializer):
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
+        fields = '__all__'
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Likes
+        fields = '__all__'
+
+
+class WishlistSerializer(serializers.Serializer):
+    class Meta:
+        model = Wishlist
         fields = '__all__'
