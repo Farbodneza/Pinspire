@@ -11,6 +11,8 @@ class Pin(models.Model):
     tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
 
 class Board(models.Model):
     VISIBILITY_CHOICES = [
@@ -38,3 +40,5 @@ class Wishlist(models.Model):
     user = models.OneToOneField(CustomUser, related_name="user_wishlist", on_delete=models.CASCADE)
     pins = models.OneToOneField(Pin, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together = ('user', 'pins')
